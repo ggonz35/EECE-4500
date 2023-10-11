@@ -23,7 +23,7 @@ begin
 	result <= enable nand output;
 	
 	-- Create inverter_amount of inverters
-	for current_result in inverter_amount - 1 downto 0
+	for i in 0 to (inverter_amount - 1)
 		result <= not result;
 	end loop;
 	

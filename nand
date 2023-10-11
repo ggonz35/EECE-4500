@@ -1,0 +1,7 @@
+* Define a 2-input NAND gate
+.subckt nand2x1 a b out vdd vss
+M1 out a vdd vdd pmos L=130n W=130n
+M2 out b vdd vdd pmos L=130n W=130n
+M3 out a vss vss nmos L=130n W=130n
+M4 a b vss vss nmos L=130n W=130n
+.ends

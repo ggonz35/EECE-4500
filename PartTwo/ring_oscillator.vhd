@@ -2,29 +2,37 @@ library ieee;
 use ieee.std_logic_1164.all;
 
 entity ring_oscillator is
-	generic(
-		-- We want an odd number of inverters including the NAND
-		inverter_amount: positive := 2
+	generic (
+		ro_length:	positive	:= 13
 	);
-	port(
-		-- Ring oscillator enable
-		enable: in std_logic;
-		
-		-- Output of ring oscillator
-		output: out std_logic
+	port (
+		enable:		in	std_logic;
+		osc_out:	out	std_logic
 	);
 end entity ring_oscillator;
 
-architecture circuit of ring_oscillator is
+architecture gen of ring_oscillator is
 	signal result: std_logic;
+	
 begin
+	assert <condition to check using ro_length>
+		report "ro_length must be an odd number"
+		severity failure;
 
-	-- NAND the input and the output
-	result <= enable nand output;
+	-- place nand gate
+	-- one input is enable, the other one the output of the last inverter
+	-- output goes into the first inverter in the chain
+		result <= enable nand osc_out;
+		
+
+	-- place inverters
+	-- for ... generate
+	-- end generate
 	
-	-- Create inverter_amount of inverters
-	for i in 0 to (inverter_amount - 1)
-		result <= not result;
-	end loop;
-	
-end architecture circuit; 
+		for i in 1 to ro_length generate
+			osc_out(i) <= not osc_out(i-1);
+		end generate;
+
+	-- drive osc_out with output of last inverter in the chain
+	osc_cout <= ...;
+end architecture gen;

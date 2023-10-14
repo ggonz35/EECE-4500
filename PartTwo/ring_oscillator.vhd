@@ -24,15 +24,16 @@ begin
 	-- output goes into the first inverter in the chain
 		result <= enable nand osc_out;
 		
-
-	-- place inverters
-	-- for ... generate
-	-- end generate
-	
-		for i in 1 to ro_length generate
-			osc_out(i) <= not osc_out(i-1);
-		end generate;
+		-- place inverters
+		-- for ... generate
+		-- end generate
+		gen_chain: for i in 0 to (ro_length - 1) generate
+		
+				result(i+1) <= not result(i);
+				
+		end generate gen_chain;
 
 	-- drive osc_out with output of last inverter in the chain
-	osc_cout <= ...;
+		osc_cout <= result(ro_length);
+		
 end architecture gen;

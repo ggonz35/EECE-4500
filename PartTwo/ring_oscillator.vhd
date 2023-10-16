@@ -15,7 +15,7 @@ architecture gen of ring_oscillator is
 	signal result: std_logic_vector(0 to ro_length-1):= 0;
 	
 begin
-	assert <condition to check using ro_length>
+	assert <ro_length mod 2 = 1>
 		report "ro_length must be an odd number"
 		severity failure;
 

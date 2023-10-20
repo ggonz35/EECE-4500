@@ -1,9 +1,9 @@
 * Define the 2-input NAND gate subcircuit
-.subckt nand2x1 a b out
+.subckt nand a b out
 M1 out a b 0 pmos L=130n W=130n
 M2 out a b 0 nmos L=130n W=130n
 M3 out out out 0 pmos L=130n W=130n
 M4 out out out 0 nmos L=130n W=130n
 .model pmos pmos L=130n W=130n
 .model nmos nmos L=130n W=130n
-.ends nand2x1
+.ends nand

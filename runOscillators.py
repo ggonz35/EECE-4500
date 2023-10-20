@@ -2,7 +2,7 @@ import random
 
 # Function to clamp a value within a specific range
 def clamp(value, minimum, maximum):
-    return max(minimum, min(value, maximum)
+    return max(minimum, min(value, maximum))
 
 # Parameters for process variations and accepted ranges
 tplv_nominal = 1.0

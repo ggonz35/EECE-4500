@@ -47,17 +47,7 @@ for i in range(num_oscillators):
             circuit_file.write(f"X{j} {in_pin} {out_pin} inverter\n")
 
         # Connect the NAND gate to the ring oscillator with an enable signal
-        circuit_file.write("X13 in inverter out nand\n")
-        circuit_file.write("Venable in 0 PULSE(0 1 0 1n 1n 0.01n 0.02n 100n)\n")
-
-        # Specify power supply and ground
-        circuit_file.write("Vdd vdd 0 1.8V\n")
-        circuit_file.write("Vss vss 0 0V\n")
-
-        # Transient analysis with enable signal activation
-        circuit_file.write(".tran 0.01n 100n 50n 0.01n UIC\n")
-
-        # End of the subcircuit
-        circuit_file.write(".ends\n")
+        circuit_file.write("X13 in1 in2 out1 nand\n")
+        circuit_file.write("X14 out1_nand out2_nand out1_nand nand\n")
 
 print(f"{num_oscillators} ring oscillator subcircuits generated.")

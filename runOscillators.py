@@ -1,45 +1,63 @@
 import random
 
-# Define the nominal transistor dimensions and oxide layer thickness
-width = 130  # in nm
-length = 100  # in nm (for example)
-oxide_thickness = 15  # in nm (for example)
+# Function to clamp a value within a specific range
+def clamp(value, minimum, maximum):
+    return max(minimum, min(value, maximum)
 
-# Define process variation parameters
-width_sigma = 0.065  # 6.5% standard deviation
-length_sigma = 0.065  # 6.5% standard deviation
-oxide_sigma = 0.05  # 5% standard deviation
+# Parameters for process variations and accepted ranges
+tplv_nominal = 1.0
+tpwv_nominal = 1.0
+tnln_nominal = 1.0
+tnwn_nominal = 1.0
+tpotv_nominal = 1.0
+tnotv_nominal = 1.0
 
-# Define the number of ring oscillators to create
+parameter_variations = {
+    "tplv": (0.85, 1.15),
+    "tpwv": (0.85, 1.15),
+    "tnln": (0.85, 1.15),
+    "tnwn": (0.85, 1.15),
+    "tpotv": (0.85, 1.15),
+    "tnotv": (0.85, 1.15),
+}
+
+# Number of ring oscillators to generate
 num_oscillators = 8
 
-
-# Define a clamping function to ensure values are within the accepted range
-def clamp(value, nominal, min_tolerance, max_tolerance):
-    clamped_value = value * nominal
-    clamped_value = max(min_tolerance * nominal, clamped_value)
-    clamped_value = min(max_tolerance * nominal, clamped_value)
-    return clamped_value
-
-
-# Loop to create and save ring oscillator subcircuits
 for i in range(num_oscillators):
-    oscillator_name = f"ringoscillator{i}.cir"
+    circuit_filename = f"ring_oscillator_{i}.cir"
+    with open(circuit_filename, "w") as circuit_file:
+        # Write the circuit description
+        circuit_file.write("* Ring Oscillator Subcircuit\n")
+        circuit_file.write(f".subckt ring_oscillator_{i} in out inverter\n")
 
-    # Generate random variations within the specified tolerances
-    random_width = clamp(random.uniform(0.85, 1.15), width, 0.85, 1.15)
-    random_length = clamp(random.uniform(0.85, 1.15), length, 0.85, 1.15)
-    random_oxide_thickness = clamp(random.uniform(0.9, 1.1), oxide_thickness, 0.9, 1.1)
+        # Randomly vary parameters within accepted ranges
+        for param, (min_value, max_value) in parameter_variations.items():
+            variation = random.uniform(min_value, max_value)
+            parameter_value = clamp(tplv_nominal * variation, min_value, max_value)
+            circuit_file.write(f".param {param} = {parameter_value}\n")
 
-    # Create and save the subcircuit for the ring oscillator
-    with open(oscillator_name, 'w') as subcircuit_file:
-        subcircuit_file.write(f".subckt ring_oscillator\n")
-        subcircuit_file.write(f"// NMOS transistor parameters\n")
-        subcircuit_file.write(f"M1 out1 net1 net2 NMOS L={random_length} W={random_width}\n")
-        subcircuit_file.write(f"M2 out2 net2 net3 NMOS L={random_length} W={random_width}\n")
-        # Add more transistors for the ring oscillator as needed
-        subcircuit_file.write(f"// PMOS transistor parameters\n")
-        # Add PMOS transistor definitions
-        subcircuit_file.write(f".ends\n")
+        # Include the inverter and define the ring oscillator
+        circuit_file.write(".include inverter.txt\n")
+        circuit_file.write(".include nand.txt\n")
+        # Define the ring oscillator with inverters
+        for j in range(12):
+            in_pin = "in" if j == 0 else f"out{j-1}"
+            out_pin = f"out{j}"
+            circuit_file.write(f"X{j} {in_pin} {out_pin} inverter\n")
 
-print(f"Created {num_oscillators} ring oscillator subcircuits.")
+        # Connect the NAND gate to the ring oscillator with an enable signal
+        circuit_file.write("X13 in inverter out nand\n")
+        circuit_file.write("Venable in 0 PULSE(0 1 0 1n 1n 0.01n 0.02n 100n)\n")
+
+        # Specify power supply and ground
+        circuit_file.write("Vdd vdd 0 1.8V\n")
+        circuit_file.write("Vss vss 0 0V\n")
+
+        # Transient analysis with enable signal activation
+        circuit_file.write(".tran 0.01n 100n 50n 0.01n UIC\n")
+
+        # End of the subcircuit
+        circuit_file.write(".ends\n")
+
+print(f"{num_oscillators} ring oscillator subcircuits generated.")

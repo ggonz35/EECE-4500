@@ -140,6 +140,6 @@ end architecture fsm;
 
 	-- BRAM
 	-- create a BRAM using the IP Catalog, instance it here
-	-- make sure you enable the In-System Memory Viewer!
+	-- make sure you enable the In-System Memory Viewer! 
 
 end architecture top;

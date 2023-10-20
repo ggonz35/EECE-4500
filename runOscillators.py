@@ -5,12 +5,12 @@ def clamp(value, minimum, maximum):
     return max(minimum, min(value, maximum))
 
 # Parameters for process variations and accepted ranges
-tplv_nominal = 1.0
-tpwv_nominal = 1.0
-tnln_nominal = 1.0
-tnwn_nominal = 1.0
-tpotv_nominal = 1.0
-tnotv_nominal = 1.0
+tplv_nom = 1.0
+tpwv_nom = 1.0
+tnln_nom = 1.0
+tnwn_nom = 1.0
+tpotv_nom = 1.0
+tnotv_nom = 1.0
 
 parameter_variations = {
     "tplv": (0.85, 1.15),
@@ -34,7 +34,7 @@ for i in range(num_oscillators):
         # Randomly vary parameters within accepted ranges
         for param, (min_value, max_value) in parameter_variations.items():
             variation = random.uniform(min_value, max_value)
-            parameter_value = clamp(tplv_nominal * variation, min_value, max_value)
+            parameter_value = clamp(tplv_nom * variation, min_value, max_value)
             circuit_file.write(f".param {param} = {parameter_value}\n")
 
         # Include the inverter and define the ring oscillator

@@ -7,7 +7,7 @@
 .param tnotv = 1.0
 
 * Define the inverter subcircuit
-.subckt inverter in out
+.subckt inverter in out L=130n W=130n
 M1 out in 0 0 pmos L=tplv W=tpwv
 + AS=75.3f AD=75.3f PS=1.23u PD=1.23u
 M2 out in 0 0 nmos L=tnln W=tnwn

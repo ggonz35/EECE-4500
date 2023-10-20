@@ -23,6 +23,10 @@ architecture gen of ring_oscillator is
 	-- result is an array of ouputs for ro_length inverters
 	signal result: std_logic_vector(0 to ro_length-1);
 
+	-- Make sure VHDL does not optimize the NOT gates away
+	attribute keep: boolean;
+	attribute keep of result: signal is true;
+
 	-- ro_out is the output signal of the circuit
 	-- Need a new signal because we cant assign result directly to osc_out
 	signal ro_out: std_logic;
@@ -32,19 +36,19 @@ begin
 	-- place nand gate
 	-- one input is enable, the other one the output of the last inverter
 	-- output goes into the first inverter in the chain
-	osc_out <= ro_out;
-	result(0) <= enable nand ro_out;
+	result(0) <= enable nand result(ro_length-1);
 		
 	-- place inverters
 	-- for ... generate
 	-- end generate
-	gen_chain: for i in 1 to (ro_length - 2) generate
+	gen_chain: for i in 1 to (ro_length - 1) generate
 		
-			result(i) <= not result(i-1);
+			result(i) <= not(result(i-1));
 				
 	end generate gen_chain;
 
 	-- drive osc_out with output of last inverter in the chain
 	ro_out <= result(ro_length-1);
+	osc_out <= ro_out;
 		
 end architecture gen;

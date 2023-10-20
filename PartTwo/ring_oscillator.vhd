@@ -6,7 +6,7 @@ entity ring_oscillator is
 	-- Constant variables to be determined during synthesis
 	-- Positive is any integer greater than but NOT equal to zero
 	generic (
-		ro_length:	positive	:= 13
+		ro_length:	positive	:= 12
 	);
 
 	-- Input is enable, the output is osc_out
@@ -32,6 +32,8 @@ architecture gen of ring_oscillator is
 	signal ro_out: std_logic;
 
 begin
+
+	assert ro_length mod 2 /= 0 report "NOT gate count must be odd";
 
 	-- place nand gate
 	-- one input is enable, the other one the output of the last inverter

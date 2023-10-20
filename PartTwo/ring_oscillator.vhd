@@ -6,7 +6,7 @@ entity ring_oscillator is
 	-- Constant variables to be determined during synthesis
 	-- Positive is any integer greater than but NOT equal to zero
 	generic (
-		ro_length:	positive	:= 12
+		ro_length:	positive	:= 13
 	);
 
 	-- Input is enable, the output is osc_out

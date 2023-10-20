@@ -27,9 +27,9 @@ for i in range(num_oscillators):
     oscillator_name = f"ringoscillator{i}.cir"
 
     # Generate random variations within the specified tolerances
-    random_width = clamp(random.uniform(0.85, 1.15), nominal_width, 0.85, 1.15)
-    random_length = clamp(random.uniform(0.85, 1.15), nominal_length, 0.85, 1.15)
-    random_oxide_thickness = clamp(random.uniform(0.9, 1.1), nominal_oxide_thickness, 0.9, 1.1)
+    random_width = clamp(random.uniform(0.85, 1.15), width, 0.85, 1.15)
+    random_length = clamp(random.uniform(0.85, 1.15), length, 0.85, 1.15)
+    random_oxide_thickness = clamp(random.uniform(0.9, 1.1), oxide_thickness, 0.9, 1.1)
 
     # Create and save the subcircuit for the ring oscillator
     with open(oscillator_name, 'w') as subcircuit_file:

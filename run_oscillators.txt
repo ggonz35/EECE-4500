@@ -6,10 +6,9 @@ Vdd vdd 0 1.8V
 Vss vss 0 0V
 
 * Transient analysis with enable signal activation
-.tran 0.01n 100n 50n 0.01n UIC
+.tran 0.01n 100n 0n 0.01n UIC
 
 .control
   run
   plot out1 out2 out3 out4 out5 out6
-  quit
 .endc

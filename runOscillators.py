@@ -42,11 +42,11 @@ for i in range(num_oscillators):
         circuit_file.write(".include nand.txt\n")
         # Define the ring oscillator with inverters
         for j in range(12):
-            in_pin = "in" if j == 0 else f"out{j-1}"
-            out_pin = f"out{j}"
-            circuit_file.write(f"X{j} {in_pin} {out_pin} inverter\n")
+            in_pin = "in1" if j == 0 else f"out{j}"
+            out_pin = f"out{j + 1}" if j < 11 else "out1"
+            circuit_file.write(f"X{j + 1} {in_pin} {out_pin} inverter L=tplv*130n W=tpwv*130n\n")
 
-        # Connect the NAND gate to the ring oscillator with an enable signal
+            # Connect the NAND gate to the ring oscillator with an enable signal
         circuit_file.write("X13 in1 in2 out1 nand\n")
         circuit_file.write("X14 out1_nand out2_nand out1_nand nand\n")
 

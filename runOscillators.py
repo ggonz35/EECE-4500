@@ -35,18 +35,25 @@ for i in range(num_oscillators):
         # Randomly vary parameters within accepted ranges
         for param, (min_value, max_value) in parameter_variations.items():
             variation = random.uniform(min_value, max_value)
-            parameter_value = clamp(param_nominal[param] * variation, min_value, max_value)
+            parameter_value = clamp(round(param_nominal[param] * variation, 2), min_value, max_value)
             circuit_file.write(f".param {param} = {parameter_value}\n")
 
         # Include the subcircuits for the inverter and NAND gate
         circuit_file.write(".include inverter.txt\n")
         circuit_file.write(".include nand.txt\n")
 
-        # Define the ring oscillator with 12 inverters
-        for j in range(12):
-            in_pin = "in1" if j == 0 else f"out{j}"
-            out_pin = f"out{j+1}" if j < 11 else "out1"
-            circuit_file.write(f"X{j+1} {in_pin} {out_pin} inverter L=tplv*130n W=tpwv*130n\n")
+        circuit_file.write("X1 in1 out1 inverter L=tplv*130n W=tpwv*130n\n")
+        circuit_file.write("X2 out1 in2 inverter L=tplv*130n W=tpwv*130n\n")
+        circuit_file.write("X3 in2 out2 inverter L=tplv*130n W=tpwv*130n\n")
+        circuit_file.write("X4 out2 in3 inverter L=tplv*130n W=tpwv*130n\n")
+        circuit_file.write("X5 in3 out3 inverter L=tplv*130n W=tpwv*130n\n")
+        circuit_file.write("X6 out3 in4 inverter L=tplv*130n W=tpwv*130n\n")
+        circuit_file.write("X7 in4 out4 inverter L=tplv*130n W=tpwv*130n\n")
+        circuit_file.write("X8 out4 in5 inverter L=tplv*130n W=tpwv*130n\n")
+        circuit_file.write("X9 in5 out5 inverter L=tplv*130n W=tpwv*130n\n")
+        circuit_file.write("X10 out5 in6 inverter L=tplv*130n W=tpwv*130n\n")
+        circuit_file.write("X11 in6 out6 inverter L=tplv*130n W=tpwv*130n\n")
+        circuit_file.write("X12 out6 in1 inverter L=tplv*130n W=tpwv*130n\n")
 
         # Define the enable signal
         circuit_file.write("Venable enable 0 PULSE(0 1 0 1n 1n 0.01n 0.02n 100n) DC 0\n")

@@ -5,6 +5,7 @@ use ieee.math_real.log2;	-- bring in log2()
 use ieee.math_real.ceil;	-- bring in ceil()
 
 
+
 entity ro_puf is
 	generic (
 		ro_length:	positive := 13;
@@ -36,7 +37,18 @@ component ring_oscillator is
 	);
 end component ring_oscillator;
 
-	
+
+component accumulator is
+	port (
+		clock:	in	std_logic;
+		enable:	in	std_logic;
+		reset:	in	std_logic;
+		counter:	in	std_logic_vector(7 downto 0);
+		output:	out	std_logic_vector(7 downto 0)
+	);
+end component accumulator;
+
+
 	-- function to determine if a number is a power of 2
 	function is_power_two (
 			n:	in	positive
@@ -105,8 +117,8 @@ begin
 		
 		a_osc: ring_oscillator
 				port map(
-					enable(i) => enable,
-					osc_out(i) => counter(i)
+					enable => enable,
+					osc_out => counter(i)
 				);
 		
 	end generate group_a;
@@ -118,8 +130,8 @@ begin
 		
 			b_osc: ring_oscillator
 				port map(
-					enable(i) => enable,
-					osc_out(i) => counter(i)
+					enable => enable,
+					osc_out => counter(i)
 				);
 		
 		
@@ -133,7 +145,7 @@ begin
 				counter(i) <= 0;	-- reset counter
 			elsif rising_edge(osc_out(i)) then
 				if enable = '1' then
-					-- increment counter by 1
+					counter(i) <= 1;
 				end if;
 			end if;
 		end process ctr;

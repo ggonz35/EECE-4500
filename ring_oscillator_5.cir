@@ -1,0 +1,24 @@
+* Ring Oscillator Subcircuit 5
+.param tplv = 1.14
+.param tpwv = 1.02
+.param tnln = 1.1
+.param tnwn = 1.04
+.param tpotv = 1.13
+.param tnotv = 0.98
+.include inverter.txt
+.include nand.txt
+X1 in1 out1 inverter L=tplv*130n W=tpwv*130n
+X2 out1 in2 inverter L=tplv*130n W=tpwv*130n
+X3 in2 out2 inverter L=tplv*130n W=tpwv*130n
+X4 out2 in3 inverter L=tplv*130n W=tpwv*130n
+X5 in3 out3 inverter L=tplv*130n W=tpwv*130n
+X6 out3 in4 inverter L=tplv*130n W=tpwv*130n
+X7 in4 out4 inverter L=tplv*130n W=tpwv*130n
+X8 out4 in5 inverter L=tplv*130n W=tpwv*130n
+X9 in5 out5 inverter L=tplv*130n W=tpwv*130n
+X10 out5 in6 inverter L=tplv*130n W=tpwv*130n
+X11 in6 out6 inverter L=tplv*130n W=tpwv*130n
+X12 out6 in1 inverter L=tplv*130n W=tpwv*130n
+Venable enable 0 PULSE(0 1 0 1n 1n 0.01n 0.02n 100n) DC 0
+X13 in1 enable out1_nand nand
+X14 out1_nand in2 out1_nand nand

@@ -9,10 +9,10 @@
 .param tnotv = 1.0
 
 * Include the subcircuit for the inverter
-.include inverter.txt
+.include inverter.cir
 
 * Include the subcircuit for the NAND gate
-.include nand.txt
+.include nand.cir
 
 * Define the ring oscillator with 12 inverters
 X1 in1 out1 inverter L=tplv*130n W=tpwv*130n

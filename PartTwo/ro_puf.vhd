@@ -4,6 +4,7 @@ use ieee.numeric_std.all;
 use ieee.math_real.log2;	-- bring in log2()
 use ieee.math_real.ceil;	-- bring in ceil()
 
+
 entity ro_puf is
 	generic (
 		ro_length:	positive := 13;
@@ -18,6 +19,24 @@ entity ro_puf is
 end entity ro_puf;
 
 architecture puf of ro_puf is
+
+
+-- Our ring oscillator entity
+component ring_oscillator is
+	-- Constant variables to be determined during synthesis
+	-- Positive is any integer greater than but NOT equal to zero
+	generic (
+		ro_length:	positive	:= 13
+	);
+
+	-- Input is enable, the output is osc_out
+	port (
+		enable:		in	std_logic;
+		osc_out:	out	std_logic
+	);
+end component ring_oscillator;
+
+	
 	-- function to determine if a number is a power of 2
 	function is_power_two (
 			n:	in	positive
@@ -83,12 +102,27 @@ begin
 	group_a: for i in 0 to ro_count / 2 - 1 generate
 		-- instance of a ring oscillator, the enable input comes from this
 		-- entity's port declaration, the output goes into osc_out(i)
+		
+		a_osc: ring_oscillator
+				port map(
+					enable(i) => enable,
+					osc_out(i) => counter(i)
+				);
+		
 	end generate group_a;
 
 	-- generate group_b
 	group_b: for i in ro_count / 2 to ro_count - 1 generate
 		-- instance of a ring oscillator, the enable input comes from this
 		-- entity's port declaration, the output goes into osc_out(i)
+		
+			b_osc: ring_oscillator
+				port map(
+					enable(i) => enable,
+					osc_out(i) => counter(i)
+				);
+		
+		
 	end generate group_b;
 
 	-- generate counters

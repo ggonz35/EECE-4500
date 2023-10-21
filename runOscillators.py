@@ -14,6 +14,7 @@ param_nominal = {
     "tnotv": 1.0
 }
 
+# Set parameter variation ranges
 parameter_variations = {
     "tplv": (0.85, 1.15),
     "tpwv": (0.85, 1.15),
@@ -26,6 +27,7 @@ parameter_variations = {
 # Number of ring oscillators to generate
 num_oscillators = 8
 
+# Create the file
 for i in range(num_oscillators):
     circuit_filename = f"ring_oscillator_{i}.cir"
     with open(circuit_filename, "w") as circuit_file:
@@ -42,6 +44,7 @@ for i in range(num_oscillators):
         circuit_file.write(".include inverter.txt\n")
         circuit_file.write(".include nand.txt\n")
 
+        # Write the basic connections to the circuit
         circuit_file.write("X1 in1 out1 inverter L=tplv*130n W=tpwv*130n\n")
         circuit_file.write("X2 out1 in2 inverter L=tplv*130n W=tpwv*130n\n")
         circuit_file.write("X3 in2 out2 inverter L=tplv*130n W=tpwv*130n\n")

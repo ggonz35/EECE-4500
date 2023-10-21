@@ -1,5 +1,5 @@
 * Main Circuit - Ring Oscillator Simulation
-.include ring_oscillator.txt
+.include ring_oscillator.cir
 
 * Specify power supply and ground
 Vdd vdd 0 1.8V

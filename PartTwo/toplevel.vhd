@@ -20,13 +20,15 @@ begin
 	-- make instance of ro_puf
 	puf: ro_puf
 		generic map (
-			-- add generic information
-			-- should come from toplevel's generic list
+			ro_length:	positive := 13;
+			ro_count:	positive := 16
 		)
 		port map (
 			-- add port information
 			-- should use some signals internal to this architecture
 			-- should use the `reset' input from toplevel
+			reset => reset; -- I assume I have to drive the reset to the reset
+			-- Not really sure how to map the rest of the ports
 		);
 
 	-- control unit

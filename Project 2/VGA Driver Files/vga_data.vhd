@@ -31,34 +31,34 @@ package vga_data is
 				-- 1920x1080 @ 60 Hz
 				-- clock 148.5 MHz
 				horizontal => (
-						active => ,				-- active area in pixels
-						front_porch => ,		-- in pixels
-						sync_width => ,			-- in pixels
-						back_porch => 			-- in pixels
+						active => 1920,				-- active area in pixels
+						front_porch => 128,		-- in pixels
+						sync_width => 328,			-- in pixels
+						back_porch => 328			-- in pixels
 					),
 				vertical => (
-						active => ,				-- active area in lines
-						front_porch => ,		-- in lines
-						sync_width => ,			-- in lines
-						back_porch => 			-- in lines
+						active => 1080,				-- active area in lines
+						front_porch => 4,		-- in lines
+						sync_width => 5,			-- in lines
+						back_porch => 36			-- in lines
 					),
 				sync_polarity => active_high
 			), (
 				-- 640x480 @ 60 Hz
 				-- clock 25.175 MHz
 				horizontal => (
-						active => ,
-						front_porch => ,
-						sync_width => ,
-						back_porch => 
+						active => 1080,				-- active area in pixels
+						front_porch => 16,		-- in pixels
+						sync_width => 96,			-- in pixels
+						back_porch => 48			-- in pixels
 					),
 				vertical => (
-						active => ,
-						front_porch => ,
-						sync_width => ,
-						back_porch => 
+						active => 480,				-- active area in lines
+						front_porch => 10,		-- in lines
+						sync_width => 33,			-- in lines
+						back_porch => 2			-- in lines
 					),
-				sync_polarity => 
+				sync_polarity => active_low
 			), (
 				-- add data here
 				-- 800x600 @ 60Hz

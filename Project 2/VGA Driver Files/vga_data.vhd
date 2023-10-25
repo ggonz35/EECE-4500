@@ -47,7 +47,7 @@ package vga_data is
 				-- 640x480 @ 60 Hz
 				-- clock 25.175 MHz
 				horizontal => (
-						active => 1080,				-- active area in pixels
+						active => 640,				-- active area in pixels
 						front_porch => 16,		-- in pixels
 						sync_width => 96,			-- in pixels
 						back_porch => 48			-- in pixels

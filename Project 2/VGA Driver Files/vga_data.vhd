@@ -63,13 +63,26 @@ package vga_data is
 				-- add data here
 				-- 800x600 @ 60Hz
 				-- clock 40 MHz
+				horizontal => (
+						active => 800,				-- active area in pixels
+						front_porch => 40,		-- in pixels
+						sync_width => 128,			-- in pixels
+						back_porch => 88			-- in pixels
+					),
+				vertical => (
+						active => 600,				-- active area in lines
+						front_porch => 1,		-- in lines
+						sync_width => 4,			-- in lines
+						back_porch => 23			-- in lines
+					),
+				sync_polarity => active_high
 			)
 		);
 
 	constant vga_res_1920x1080:	vga_timing := vga_res_data(0);
 	constant vga_res_640x480:	vga_timing := vga_res_data(1);
-	constant vga_res_800x600:	vga_timing := ;	-- TODO: initialize
-	constant vga_res_default:	vga_timing := ;	-- TODO: initialize to your
+	constant vga_res_800x600:	vga_timing := vga_res_data(2);	-- TODO: initialize
+	constant vga_res_default:	vga_timing := vga_res_data(1);	-- TODO: initialize to your
 												-- target resolution
 
 	---- TODO: some functions need to be implemented
@@ -100,7 +113,8 @@ package vga_data is
 	-- and return the new coordinate
 	function next_coordinate (
 			point:		in	coordinate;
-			vga_res:	in	vga_timing := vga_res_default
+			vga_res:	in	vga_timing := vga_res_default;
+			coordinate = coordinate + 1
 		) return coordinate;
 
 	-- generate a horizontal sync pulse if we are in the hsync period
@@ -187,15 +201,19 @@ package body vga_data is
 			vga_res:	in	vga_timing := vga_res_default
 		) return boolean is
 	begin
-		-- TODO: implement
+		return point.y < vga_res.vertical.active
+		-- WRITTEN BY GROUp
 	end function y_visible;
 
 	function point_visible (
 			point:		in	coordinate;
 			vga_res:	in	vga_timing := vga_res_default
 		) return boolean is
+		variable point_visible: boolean;
+		
 	begin
-		-- TODO: implement
+		-- DONE BY GROUp
+		 return x_visible(point, vga_res) and y_visible(point, vga_res)
 	end function point_visible;
 
 	function make_coordinate (
@@ -215,12 +233,17 @@ package body vga_data is
 			variable ret: coordinate;
 	begin
 		ret.x := point.x + 1;
-		ret.y := point.y;
+		ret.y := point.y + 1;
 
-		-- TODO: add logic to increment y and reset y if needed
+		-- DONE BY GROUP
+		
+		
+		if (ret.y = vga_res.vertical.active) then
+			ret.y = 0
+		end if;
 
 		if ret.x = timing_range(vga_res, horizontal) then
-			ret.x := 0;
+			ret.x := 0
 		end if;
 
 
@@ -240,7 +263,8 @@ package body vga_data is
 			vga_res:	in	vga_timing := vga_res_default
 		) return std_logic is
 	begin
-		-- TODO: implement
+		--DONE BY GROUP
+		return do_sync(point,vga_res, horizontal)
 	end function do_vertical_sync;
 
 end package body vga_data;

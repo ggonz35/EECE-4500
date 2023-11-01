@@ -114,7 +114,6 @@ package vga_data is
 	function next_coordinate (
 			point:		in	coordinate;
 			vga_res:	in	vga_timing := vga_res_default;
-			coordinate = coordinate + 1
 		) return coordinate;
 
 	-- generate a horizontal sync pulse if we are in the hsync period
@@ -227,28 +226,27 @@ package body vga_data is
 	end function make_coordinate;
 
 	function next_coordinate (
-			point:		in	coordinate;
-			vga_res:	in	vga_timing := vga_res_default
-		) return coordinate is
-			variable ret: coordinate;
+		point: in coordinate;
+		vga_res: in vga_timing := vga_res_default
+	) return coordinate is
+		variable ret: coordinate;
+		
 	begin
+	
 		ret.x := point.x + 1;
 		ret.y := point.y + 1;
-
-		-- DONE BY GROUP
-		
-		
-		if (ret.y = vga_res.vertical.active) then
-			ret.y = 0
+		-- Wrap around logic for vertical coordinates
+		if ret.y = vga_res.vertical.active then
+			ret.y := 0;
+			
 		end if;
-
-		if ret.x = timing_range(vga_res, horizontal) then
-			ret.x := 0
+		-- Wrap around logic for horizontal coordinates
+		if ret.x = timing_range(vga_res, vertical) then
+			ret.x := 0;
+			
 		end if;
-
-
 		return ret;
-	end function next_coordinate;
+end function next_coordinate;
 
 	function do_horizontal_sync (
 			point:		in	coordinate;
@@ -259,12 +257,11 @@ package body vga_data is
 	end function do_horizontal_sync;
 
 	function do_vertical_sync (
-			point:		in	coordinate;
-			vga_res:	in	vga_timing := vga_res_default
-		) return std_logic is
+		point: in coordinate;
+		vga_res: in vga_timing := vga_res_default
+	) return std_logic is
 	begin
-		--DONE BY GROUP
-		return do_sync(point,vga_res, horizontal)
+		return do_sync(point, vga_res, vertical); -- Corrected to vertical
 	end function do_vertical_sync;
 
 end package body vga_data;

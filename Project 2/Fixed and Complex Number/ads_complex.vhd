@@ -1,8 +1,10 @@
 ---- this file is part of the ADS library
 library ads;
-use work.ads_fixed.all;
 
 package ads_complex_pkg is
+
+	use work.ads_fixed.all;
+
 	-- complex number in rectangular form
 	type ads_complex is
 	record
@@ -43,8 +45,7 @@ package ads_complex_pkg is
 		) return ads_sfixed;
 
 	-- constants
-	constant complex_zero: ads_complex :=
-					ads_cmplx(to_ads_sfixed(0), to_ads_sfixed(0));
+	constant complex_zero: ads_complex := ads_cmplx(to_ads_sfixed(0), to_ads_sfixed(0));
 
 end package ads_complex_pkg;
 

@@ -200,19 +200,19 @@ package body vga_data is
 			vga_res:	in	vga_timing := vga_res_default
 		) return boolean is
 	begin
-		return point.y < vga_res.vertical.active
+		return point.y < vga_res.vertical.active;
 		-- WRITTEN BY GROUp
-	end function y_visible
+	end function y_visible;
 
 	function point_visible (
 			point:		in	coordinate;
-			vga_res:	in	vga_timing := vga_res_default;
+			vga_res:	in	vga_timing := vga_res_default
 		) return boolean is
 		variable point_visible: boolean;
 		
 	begin
 		-- DONE BY GROUp
-		 return x_visible(point, vga_res) and y_visible(point, vga_res)
+		 return x_visible(point, vga_res) and y_visible(point, vga_res);
 	end function point_visible;
 
 	function make_coordinate (
@@ -241,7 +241,7 @@ package body vga_data is
 		if ret.x = timing_range(vga_res, vertical) then
 			ret.x := 0;
 		end if;
-    return ret is;
+    return ret;
 end function next_coordinate;
 
 	function do_horizontal_sync (

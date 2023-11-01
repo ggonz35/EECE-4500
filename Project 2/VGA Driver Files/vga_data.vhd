@@ -113,7 +113,7 @@ package vga_data is
 	-- and return the new coordinate
 	function next_coordinate (
 			point:		in	coordinate;
-			vga_res:	in	vga_timing := vga_res_default;
+			vga_res:	in	vga_timing := vga_res_default
 		) return coordinate;
 
 	-- generate a horizontal sync pulse if we are in the hsync period
@@ -202,11 +202,11 @@ package body vga_data is
 	begin
 		return point.y < vga_res.vertical.active
 		-- WRITTEN BY GROUp
-	end function y_visible;
+	end function y_visible
 
 	function point_visible (
 			point:		in	coordinate;
-			vga_res:	in	vga_timing := vga_res_default
+			vga_res:	in	vga_timing := vga_res_default;
 		) return boolean is
 		variable point_visible: boolean;
 		
@@ -226,23 +226,22 @@ package body vga_data is
 	end function make_coordinate;
 
 	function next_coordinate (
-    point: inout coordinate;
+    point: in coordinate;
     vga_res: in vga_timing := vga_res_default
-) return coordinate is
-    variable ret: coordinate;
-begin
-    ret.x := point.x + 1;
-    ret.y := point.y + 1;
-    -- Wrap around logic for vertical coordinates
-    if ret.y = vga_res.vertical.active then
-        ret.y := 0;
-    end if;
-    -- Wrap around logic for horizontal coordinates
-    if ret.x = timing_range(vga_res, horizontal) then
-        ret.x := 0;
-    end if;
-    point := ret;  -- Update the input coordinate with the new values
-    return ret;    -- Return the calculated coordinate
+	) return coordinate is
+		variable ret: coordinate;
+	begin
+		ret.x := point.x + 1;
+		ret.y := point.y + 1;
+		-- Wrap around logic for vertical coordinates
+		if ret.y = vga_res.vertical.active then
+			ret.y := 0;
+		end if;
+		-- Wrap around logic for horizontal coordinates
+		if ret.x = timing_range(vga_res, vertical) then
+			ret.x := 0;
+		end if;
+    return ret is;
 end function next_coordinate;
 
 	function do_horizontal_sync (

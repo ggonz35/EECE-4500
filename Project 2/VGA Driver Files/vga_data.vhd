@@ -226,26 +226,23 @@ package body vga_data is
 	end function make_coordinate;
 
 	function next_coordinate (
-		point: in coordinate;
-		vga_res: in vga_timing := vga_res_default
-	) return coordinate is
-		variable ret: coordinate;
-		
-	begin
-	
-		ret.x := point.x + 1;
-		ret.y := point.y + 1;
-		-- Wrap around logic for vertical coordinates
-		if ret.y = vga_res.vertical.active then
-			ret.y := 0;
-			
-		end if;
-		-- Wrap around logic for horizontal coordinates
-		if ret.x = timing_range(vga_res, vertical) then
-			ret.x := 0;
-			
-		end if;
-		return ret;
+    point: inout coordinate;
+    vga_res: in vga_timing := vga_res_default
+) return coordinate is
+    variable ret: coordinate;
+begin
+    ret.x := point.x + 1;
+    ret.y := point.y + 1;
+    -- Wrap around logic for vertical coordinates
+    if ret.y = vga_res.vertical.active then
+        ret.y := 0;
+    end if;
+    -- Wrap around logic for horizontal coordinates
+    if ret.x = timing_range(vga_res, horizontal) then
+        ret.x := 0;
+    end if;
+    point := ret;  -- Update the input coordinate with the new values
+    return ret;    -- Return the calculated coordinate
 end function next_coordinate;
 
 	function do_horizontal_sync (

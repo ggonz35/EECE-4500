@@ -15,9 +15,8 @@ package ads_fixed is
 	type ads_sfixed is array(integer range msb downto -lsb) of std_logic;
 
 	-- other constants
-	constant ads_minimum_value: ads_sfixed :=
---				(msb => '1', others => '0');
-				'1' & ( msb - 1 downto -lsb => '0' );
+	constant ads_minimum_value: ads_sfixed := (msb => '1', others => '0');
+				-- '1' & ( msb - 1 downto -lsb => '0' );
 	constant ads_maximum_value: ads_sfixed :=
 				(msb => '0', others => '1');
 

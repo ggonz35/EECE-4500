@@ -11,6 +11,10 @@ procedure compute_point
     variable iterations: in natural
     variable color_map: out color_map_array) is
 
+    generic(
+        threshold: positive := 8
+    );
+
     variable z: ads_complex;
     variable iteration: natural; -- This is never a negative number bc its an iteration
 begin
@@ -22,7 +26,7 @@ begin
      while iteration < iterations loop
         z := ads_square(z) + c;
 
-            if abs2(z) > threshold then -- TODO: we need to define threshold, not sure what value it is
+            if abs2(z) > threshold then
                 exit; -- not sure if using exit is correct but we need to break here
             end if;
 

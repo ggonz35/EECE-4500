@@ -12,7 +12,7 @@ procedure compute_point
     variable color_map: out color_map_array) is
 
     generic(
-        threshold: positive := 8
+        threshold: positive := 64
     );
 
     variable z: ads_complex;

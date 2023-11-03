@@ -5,7 +5,7 @@
 -- Creates a type called color_map_array with a size of maximum iterations
 type color_map_array is array (0 to iterations) of ads_complex;
 
-procedure compute_point()
+procedure compute_point
     -- Procedures dont return values so we need to define our output as a variable with type "out"
     (variable c: in ads_complex;
     variable iterations: in natural

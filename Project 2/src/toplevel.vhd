@@ -13,7 +13,7 @@ end mandlebrot;
 architecture steve of mandlebrot is
 
     constant PATH : string  := "C:\Users\Zeph\Desktop\steve_one.bmp";
-    type STD_FILE is file of std_logic_vector(4-1 downto 0);
+    type STD_FILE is file of std_logic_vector(4- downto 0);
     file fileptr : STD_FILE;
 
 begin

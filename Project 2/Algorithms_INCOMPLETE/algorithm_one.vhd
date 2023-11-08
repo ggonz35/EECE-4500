@@ -1,7 +1,6 @@
 -- Procedures help us prevent repeating code
 -- It is a function without a return value
 -- To get values from a procedure you need to specify signals that are in or out
-library algor;
 
 -- Creates a type called color_map_array with a size of maximum iterations
 type color_map_array is array (0 to iterations) of ads_complex;

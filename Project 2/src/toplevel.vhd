@@ -1,6 +1,7 @@
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
+
 use std.textio.all;
 
 use work.ads_complex_pkg.all;
@@ -11,12 +12,11 @@ end entity mandelbrot;
 
 architecture steve of mandelbrot is
 
-    constant PATH: string := "C:\Users\Zeph\Desktop\steve_one.bmp";
-    type STD_FILE is file of std_logic_vector(3 downto 0); -- Change size to 4 bits
-    file fileptr: STD_FILE;
+    constant PATH : string  := "C:\Users\Zeph\Desktop\steve_one.bmp";
+    type STD_FILE is file of std_logic_vector(3 downto 0);
+    file fileptr : STD_FILE;
 
 begin
-
     -- Add your VGA configuration and color map setup here
     procedure generate_set is
         generic
@@ -26,7 +26,7 @@ begin
         variable c: ads_complex;
         variable color_index: natural;
         variable color: std_logic_vector(3 downto 0);
-        variable FILE_OPEN_STATUS: FILE_OPEN_STATUS; -- Declare the FILE_OPEN_STATUS variable
+        variable FILE_OPEN_STATUS: file_open_status; -- Define FILE_OPEN_STATUS
     begin
         file_open(FILE_OPEN_STATUS, fileptr, PATH, write_mode);
 

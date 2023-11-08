@@ -24,7 +24,7 @@ procedure generate_set
     );
 
     variable c: ads_complex;
-    variable color: ???; -- Some value between 0 and 255
+    variable color: std_logic_vector(0 to 15); -- Some value between 0 and 255
 
 begin
 

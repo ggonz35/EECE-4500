@@ -15,7 +15,7 @@
 --  Get the color
 --  Print the color at the converted coordinates
 
-
+library algor;
 
 procedure generate_set
 

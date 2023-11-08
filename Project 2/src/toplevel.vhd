@@ -3,7 +3,9 @@ use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 use work.ads_complex_pkg.all;
 use work.vga_data.all;
+
 -- Add your VGA configuration and color map setup here
+
 procedure generate_set is
     generic
     (
@@ -12,6 +14,7 @@ procedure generate_set is
     variable c: ads_complex;
     variable color_index: natural;
     variable color: std_logic_vector(3 downto 0);
+
 begin
     for l in 0 to 479 loop
         for p in 0 to 639 loop
@@ -25,6 +28,7 @@ begin
         end loop;
     end loop;
 end procedure;
+               
 function compute_point(c: in ads_complex; iterations: in positive) return natural is
     variable z: ads_complex := complex_zero;
     variable iteration: natural := 0;

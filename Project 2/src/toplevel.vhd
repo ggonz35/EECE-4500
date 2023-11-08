@@ -60,27 +60,9 @@ begin
             end if;
             iteration := iteration + 1;
         end loop;
-<<<<<<< HEAD
         return 0;
     end function compute_point;
-=======
     end loop;
 end procedure;
-               
-function compute_point(c: in ads_complex; iterations: in positive) return natural is
-    variable z: ads_complex := complex_zero;
-    variable iteration: natural := 0;
-    constant threshold: ads_sfixed := to_ads_sfixed(4.0); -- You can adjust the threshold
-begin
-    while iteration < iterations loop
-        z := (z * z) + c;
-        if abs2(z) > threshold then
-            return iteration;
-        end if;
-        iteration := iteration + 1;
-    end loop;
-    return 0;
-end function compute_point;
->>>>>>> 027f577cfdb22b3d68678189ebaba9c76ebb329c
 
 end steve;

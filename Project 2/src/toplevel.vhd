@@ -4,8 +4,8 @@ use ieee.numeric_std.all;
 
 use std.textio.all;
 
-use work.ads_complex_pkg.all;
-use work.vga_data.all;
+use work.ads.all;
+use work.vga.all;
 
 entity mandlebrot is
 end mandlebrot;

@@ -1,0 +1,63 @@
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+use std.textio.all;
+
+use work.ads.all;
+use work.vga.all;
+
+entity mandelbrot is
+end toplevel;
+
+architecture steve of mandelbrot is
+	signal clk_50		: std_logic := '0';
+	signal vga_clk		: std_logic_vector (4 downto 0);
+	signal rst			: std_logic;
+	signal point_out	: coordinate;
+	signal p_val_out	: boolean;
+	signal vs_out 		: std_logic;
+	signal hs_out 		: std_logic;
+	signal r_out		: std_logic_vector(0 to 3)
+	signal g_out		: std_logic_vector(0 to 3)
+	signal b_out		: std_logic_vector(0 to 3)
+	signal a_set		: std_logic := '0';
+	signal l_set		: std_logic;
+	
+
+
+begin
+    -- Add your VGA configuration and color map setup here
+	 
+	pll : vga_pll 
+	
+		port map (
+		
+		arset				<= a_set;
+		in_clk			<= clk_50;
+		
+		vga_clk 			<= c0;
+		l_set 			<= locked
+		
+	);
+	
+	
+	vga:vga_fsm
+	
+		  port map(
+		  
+		  vga_clock		<= vga_clk
+        reset			<= rst
+
+		  point_out		<=	point;
+		  p_val_out		<= point_valid;
+
+		  vs_out			<= h_sync;
+		  hs_out			<= v_sync
+		
+	);
+	
+	
+	 
+
+end architecture steve;

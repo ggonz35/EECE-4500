@@ -22,7 +22,7 @@ entity compute_point is
         iterations: natural := 100;  -- Set an appropriate value
         stage_number: natural := 42   -- Set an appropriate value
     );
-end compute_point;
+end entity compute_point;
 
 architecture set_gen of compute_point is
     -- signal declaration
@@ -32,7 +32,7 @@ architecture set_gen of compute_point is
     -- Creates a type called color_map_array with a size of maximum iterations
     type color_map_array is array (natural range <>) of ads_complex;
 
-    begin
+begin
     process(clk, rst)
     begin
         if rst = '1' then
@@ -46,7 +46,8 @@ architecture set_gen of compute_point is
                 (others => (re => to_ads_sfixed(0), im => to_ads_sfixed(0)));
 
             -- Call the procedure with appropriate parameters
-            compute_point(stage_input, my_color_map, stage_output);
+            -- (Assuming compute_point is a procedure, adjust accordingly)
+            compute_point_procedure(stage_input, iterations, my_color_map, stage_output);
 
             -- Compute z^2 + c
             z_real_part_temp <= (stage_input.z.re ** 2) - (stage_input.z.im ** 2) + stage_input.c.re;
@@ -67,4 +68,4 @@ architecture set_gen of compute_point is
 
         end if;
     end process;
-end set_gen;
+end architecture set_gen;

@@ -1,37 +1,39 @@
--- THIS S********* AINT WORKING SMH DONT TRUST MY CODE
--- MISC Notes
--- Points go from 0 to 639
--- Points -> 3.2 * p / 640 - 2.2
--- Lines go from 0 to 479
--- Lines -> 2.2 * (240 - l) / 480
+library ieee;
+use ieee.std_logic_1164.all;
 
--- X and Y need to be converted to the imaginary
---  plane
+entity generate_set is
+	port();
+	
+end generate_set;
 
--- Go to first line
--- Iterate through points
---  For each point, we convert the X and Y
---  Call the compute_point function
---  Get the color
---  Print the color at the converted coordinates
 
-procedure generate_set
+architecture set_gen of generate_set is
+	-- signal decleration
+	
+	begin
 
-    generic(
-        iterations: positive := 16
-    );
+	procedure generate_set is
 
-    variable c: ads_complex;
-    variable color: std_logic_vector(0 to 15); -- Some value between 0 and 255
+        variable c: ads_complex;
+        variable color_index: natural;
+        variable color: std_logic_vector(3 downto 0);
+        file output_file: text open write_mode is PATH;
+        variable l: line;
 
-begin
+    begin
 
-    for l in 0 to 479 loop
-        for p in 0 to 639 loop
-            c := ads_cmplx(3.2 * p / 640 - 2.2, 2.2 * (240 - l) / 480);
-            color := compute_point(c);
-            -- TODO: Add the plot functionality to this
+        for l in 0 to 479 loop
+            for p in 0 to 639 loop
+
+                if x_visible(make_coordinate(p, l)) and y_visible(make_coordinate(p, l)) then
+                    c := ads_cmplx(to_ads_sfixed(3.2 * real(p) / 640.0 - 2.2), to_ads_sfixed(2.2 * real(240 - l) / 480.0));
+                    color_index := compute_point(c, iterations);
+                    color := vga_color_map(color_index);
+                    writeline(output_file, color(2) & color(1) & color(0) & "00");
+                    
+                end if;
+            end loop;
         end loop;
-    end loop;
-
-end procedure;
+        file_close(fileptr);
+    end procedure;
+end set_gen;

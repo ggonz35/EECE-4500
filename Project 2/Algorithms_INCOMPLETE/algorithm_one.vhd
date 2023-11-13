@@ -2,14 +2,20 @@ library ieee;
 use ieee.std_logic_1164.all;
 use work.ads.all;  -- Assuming ads_complex_pkg is in the work library
 
-entity generate_set is
+entity compute_point is
     port (
         clk : in STD_LOGIC;
         rst : in STD_LOGIC;
         stage_input : in PipelineRecord;
         stage_output : out PipelineRecord
     );
-end generate_set;
+	 generic (
+        threshold: real := 64.0;  -- Set an appropriate value
+        iterations: natural := 100;  -- Set an appropriate value
+        stage_number: natural := 42   -- Set an appropriate value
+    );
+
+end compute_point;
 
 architecture set_gen of generate_set is
     -- signal declaration
@@ -20,18 +26,6 @@ architecture set_gen of generate_set is
 
     -- Creates a type called color_map_array with a size of maximum iterations
     type color_map_array is array (natural range <>) of ads_complex;
-
-    generic (
-        threshold: real := 64.0;  -- Set an appropriate value
-        iterations: natural := 100;  -- Set an appropriate value
-        stage_number: natural := 42   -- Set an appropriate value
-    );
-
-    procedure compute_point
-        (variable c: in ads_complex;
-         variable iterations: in natural;
-         variable color_map: out color_map_array);
-    end procedure;
 
     -- Define the PipelineRecord type
     type PipelineRecord is record

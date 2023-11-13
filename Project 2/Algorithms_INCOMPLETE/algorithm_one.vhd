@@ -22,8 +22,9 @@ architecture set_gen of generate_set is
     type color_map_array is array (natural range <>) of ads_complex;
 
     generic (
-        threshold: positive := 64;
+        threshold: real := 64.0;  -- Set an appropriate value
         iterations: natural := 100;  -- Set an appropriate value
+        stage_number: natural := 42   -- Set an appropriate value
     );
 
     procedure compute_point
@@ -50,16 +51,29 @@ begin
             -- Your pipeline stage logic here
 
             -- Initialize color_map_array
-            signal my_color_map : color_map_array(0 to iterations - 1) := (others => ads_complex_pkg.complex_zero);
+            signal my_color_map : color_map_array(0 to iterations - 1) :=
+                (others => (re => to_ads_sfixed(0), im => to_ads_sfixed(0)));
 
             -- Call the procedure with appropriate parameters
             compute_point(stage_input.c, iterations, my_color_map);
 
             -- Update stage_output based on your pipeline logic
-            stage_output.z <= ...;  -- Update based on your logic
-            stage_output.c <= ...;  -- Update based on your logic
-            stage_output.stage_data <= ...;  -- Update based on your logic
-            stage_output.stage_overflow <= ...;  -- Update based on your logic
+            stage_output.stage_data <= stage_input.stage_data when stage_input.stage_overflow else stage_number;
+            stage_output.stage_overflow <= stage_input.stage_overflow or (z_overflow or c_overflow);
+            stage_output.c <= stage_input.c;
+
+            -- Compute z^2 + c
+            z_real_part_temp <= (stage_input.z.re ** 2) - (stage_input.z.im ** 2) + stage_input.c.re;
+            z_imaginary_part_temp <= (2.0 * stage_input.z.re * stage_input.z.im) + stage_input.c.im;
+
+            -- Calculate overflow flags for z and c
+            z_overflow <= (abs(z_real_part_temp) > threshold) or (abs(z_imaginary_part_temp) > threshold);
+            c_overflow <= (abs(stage_input.c.re) > threshold) or (abs(stage_input.c.im) > threshold);
+
+            -- Use temporary values to update z
+            stage_output.z.re <= z_real_part_temp;
+            stage_output.z.im <= z_imaginary_part_temp;
+
         end if;
     end process;
 end set_gen;

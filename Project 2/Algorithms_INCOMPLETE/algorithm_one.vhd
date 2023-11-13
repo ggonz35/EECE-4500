@@ -1,14 +1,6 @@
 library ieee;
 use ieee.std_logic_1164.all;
-use work.ads.all;  -- I am going to violence
-
--- Move PipelineRecord type declaration here
-type PipelineRecord is record
-    z : ads_complex;
-    c : ads_complex;
-    stage_data : natural;
-    stage_overflow : boolean;
-end record;
+use work.ads.all;  -- Assuming ads_complex_pkg is in the work library
 
 entity compute_point is
     generic (

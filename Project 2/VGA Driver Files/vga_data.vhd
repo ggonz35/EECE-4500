@@ -3,6 +3,15 @@ use ieee.std_logic_1164.all;
 
 package vga_data is
 
+	
+	type color_map is record
+
+		red	: std_logic_vector (0 to 3);
+		green	: std_logic_vector (0 to 3);
+		blue	: std_logic_vector (0 to 3);
+
+	end record color_map;
+
 	type timing_data is record
 		active:			natural;
 		front_porch:	natural;

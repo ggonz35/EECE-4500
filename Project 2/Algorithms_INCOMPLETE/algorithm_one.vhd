@@ -21,10 +21,13 @@ architecture set_gen of compute_point is
     signal z_real_part_temp, z_imaginary_part_temp : real;
     signal z_overflow, c_overflow : boolean;
 
-    -- Creates a type called color_map_array with a size of maximum iterations
-    type color_map_array is array (natural range <>) of ads_complex;
+-- Creates a type called color_map_array with a size of maximum iterations
+type color_map_array is array (natural range <>) of ads_complex;
 
-    begin
+signal my_color_map : color_map_array(0 to iterations - 1) :=
+    (others => (re => to_ads_sfixed(0), im => to_ads_sfixed(0)));
+
+begin
     process(clk, rst)
     begin
         if rst = '1' then
@@ -32,10 +35,6 @@ architecture set_gen of compute_point is
             -- ...
         elsif rising_edge(clk) then
             -- Your pipeline stage logic here
-
-            -- Initialize color_map_array
-            signal my_color_map : color_map_array(0 to iterations - 1) :=
-                (others => (re => to_ads_sfixed(0), im => to_ads_sfixed(0)));
 
             -- Call the procedure with appropriate parameters
             compute_point_procedure(stage_input, iterations, my_color_map, stage_output);

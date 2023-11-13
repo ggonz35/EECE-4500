@@ -1,9 +1,18 @@
--- Procedures help us prevent repeating code
--- It is a function without a return value
--- To get values from a procedure you need to specify signals that are in or out
+library ieee;
+use ieee.std_logic_1164.all;
 
+entity generate_set is
+	port();
+	
+end generate_set;
+
+
+architecture set_gen of generate_set is
+	-- signal decleration
 -- Creates a type called color_map_array with a size of maximum iterations
 type color_map_array is array (0 to iterations) of ads_complex;
+
+begin
 
 procedure compute_point
     -- Procedures dont return values so we need to define our output as a variable with type "out"
@@ -33,5 +42,5 @@ begin
         iteration := iteration + 1;
         color_map(iteration) := z;
      end loop;
-
-end procedure;
+	end procedure;
+end compute_point

@@ -11,6 +11,16 @@ package ads_complex_pkg is
 		re: ads_sfixed;
 		im: ads_sfixed;
 	end record ads_complex;
+	
+	
+	-- Moved PipelineRecord type here due to glitch
+	type PipelineRecord is record
+		z : ads_complex;
+		c : ads_complex;
+		stage_data : natural;
+		stage_overflow : boolean;
+	end record;
+
 
 	---- functions
 
@@ -109,6 +119,10 @@ package body ads_complex_pkg is
         result := (arg.re * arg.re) + (arg.im * arg.im);
         return result;
     end function abs2;
+	
+
+end package body ads_complex_pkg;
+
 	
 
 end package body ads_complex_pkg;

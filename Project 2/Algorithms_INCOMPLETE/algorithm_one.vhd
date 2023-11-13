@@ -1,6 +1,6 @@
 library ieee;
 use ieee.std_logic_1164.all;
-use work.ads.all;  -- Assuming ads_complex_pkg is in the work library
+use work.ads.all;  -- I am going to violence
 
 -- Move PipelineRecord type declaration here
 type PipelineRecord is record
@@ -11,16 +11,16 @@ type PipelineRecord is record
 end record;
 
 entity compute_point is
+    generic (
+        threshold: real := 64.0;  -- Set an appropriate value
+        iterations: natural := 100;  -- Set an appropriate value
+        stage_number: natural := 42   -- Set an appropriate value
+    );
     port (
         clk : in STD_LOGIC;
         rst : in STD_LOGIC;
         stage_input : in PipelineRecord;
         stage_output : out PipelineRecord
-    );
-    generic (
-        threshold: real := 64.0;  -- Set an appropriate value
-        iterations: natural := 100;  -- Set an appropriate value
-        stage_number: natural := 42   -- Set an appropriate value
     );
 end entity compute_point;
 
@@ -32,7 +32,7 @@ architecture set_gen of compute_point is
     -- Creates a type called color_map_array with a size of maximum iterations
     type color_map_array is array (natural range <>) of ads_complex;
 
-begin
+    begin
     process(clk, rst)
     begin
         if rst = '1' then
@@ -46,7 +46,6 @@ begin
                 (others => (re => to_ads_sfixed(0), im => to_ads_sfixed(0)));
 
             -- Call the procedure with appropriate parameters
-            -- (Assuming compute_point is a procedure, adjust accordingly)
             compute_point_procedure(stage_input, iterations, my_color_map, stage_output);
 
             -- Compute z^2 + c

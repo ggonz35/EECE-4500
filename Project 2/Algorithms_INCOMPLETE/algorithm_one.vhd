@@ -1,6 +1,6 @@
 library ieee;
 use ieee.std_logic_1164.all;
-use work.ads.all;  -- Assuming ads_complex_pkg is in the work library
+use work.ads.all;  -- I am going to violence
 
 entity compute_point is
     generic (

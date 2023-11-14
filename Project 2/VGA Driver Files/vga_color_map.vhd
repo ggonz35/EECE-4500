@@ -5,7 +5,7 @@ use ieee.std_logic_1164.all;
 entity vga_color_map is
 	port(
 	color_index		: in std_logic;
-	color_map_out	: in color_map;
+	color_map_out		: out color_map
 	);
 end vga_color_map;
 

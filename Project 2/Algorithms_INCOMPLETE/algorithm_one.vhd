@@ -32,7 +32,7 @@ begin
     begin
         if rst = '1' then
             -- Reset logic if needed
-            -- ...
+            -- Optimize me please Eduardo
         elsif rising_edge(clk) then
             -- Your pipeline stage logic here
 

@@ -51,8 +51,13 @@ begin
             stage_output.z.re <= z_real_part_temp;
             stage_output.z.im <= z_imaginary_part_temp;
 
-            -- Update stage_output based on your pipeline logic
-            stage_output.stage_data <= stage_input.stage_data when stage_input.stage_overflow else stage_number;
+            -- Update stage_output based on your pipeline logic				
+				if stage_input.stage_overflow = '1' then
+					stage_output.stage_data <= stage_input.stage_data;
+				else
+					stage_output.stage_data <= stage_number;
+				end if;
+				
             stage_output.stage_overflow <= stage_input.stage_overflow or (z_overflow or c_overflow);
             stage_output.c <= stage_input.c;
 

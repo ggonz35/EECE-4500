@@ -21,8 +21,8 @@ architecture vga_c_map of vga_color_map is
 				color_map_out.blue  <= "1111";
 			elsif color_index = '1' then
 				color_map_out.red   <= "0000";
-				color_map_out.green <= "0000";
-				color_map_out.blue  <= "1111";
+				color_map_out.green <= "1111";
+				color_map_out.blue  <= "0000";
 			elsif color_index = '2' then
 				color_map_out.red   <= "1111";
 				color_map_out.green <= "0000";

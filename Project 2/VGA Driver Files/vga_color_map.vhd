@@ -1,6 +1,7 @@
 library ieee;
 use ieee.std_logic_1164.all;
 
+use work.vga_data.all;
 
 entity vga_color_map is
 	port(

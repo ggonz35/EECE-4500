@@ -1,6 +1,7 @@
 library ieee;
 use ieee.std_logic_1164.all;
-use work.ads.all;  -- I am going to violence
+
+use work.ads_complex_pkg.all;
 
 entity compute_point is
     generic (
@@ -32,7 +33,7 @@ begin
     begin
         if rst = '1' then
             -- Reset logic if needed
-            -- Optimize me please Eduardo
+            -- ...
         elsif rising_edge(clk) then
             -- Your pipeline stage logic here
 

@@ -71,3 +71,4 @@ begin
     v_sync <= v_sync_pulse;
 
 end architecture fsm;
+ 

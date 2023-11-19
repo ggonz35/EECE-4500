@@ -1,5 +1,5 @@
 ---- this file is part of the ADS library
-library ads;
+library work;
 
 package ads_complex_pkg is
 
@@ -119,10 +119,6 @@ package body ads_complex_pkg is
         result := (arg.re * arg.re) + (arg.im * arg.im);
         return result;
     end function abs2;
-	
-
-end package body ads_complex_pkg;
-
 	
 
 end package body ads_complex_pkg;

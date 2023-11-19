@@ -14,7 +14,7 @@ entity mandelbrot is
 		vga_hs 			: out std_logic;
 		vga_r 			: out std_logic(0 to 3);
 		vga_g 			: out std_logic(0 to 3);
-		vga_b 			: out std_logic(0 to 3);
+		vga_b 			: out std_logic(0 to 3)
 		
 	);
 end mandelbrot;
@@ -31,35 +31,35 @@ architecture steve of mandelbrot is
 	signal g_out		: std_logic_vector(0 to 3);
 	signal b_out		: std_logic_vector(0 to 3);
 	signal a_set		: std_logic := '0';
-	signal l_set		: std_logic
+	signal l_set		: std_logic;
 
 begin
     -- Add your VGA configuration and color map setup here
 	 
-	pll : vga_pll 
+	pll :entity vga_pll 
 	
 		port map (
 		
-		arset				<= a_set;
-		in_clk			<= clk_50;
+		arset				<= a_set,
+		in_clk			<= clk_50,
 		
-		vga_clk 			<= c0;
+		vga_clk 			<= c0,
 		l_set 			<= locked
 		
 	);
 	
 	
-	vga:vga_fsm
+	vga:entity vga_fsm
 	
 		  port map(
 		  
-		  vga_clock		<= vga_clk
-        reset			<= rst
+		  vga_clock		<= vga_clk,
+        reset			<= rst,
 
-		  point_out		<=	point;
-		  p_val_out		<= point_valid;
+		  point_out		<=	point,
+		  p_val_out		<= point_valid,
 
-		  vs_out			<= h_sync;
+		  vs_out			<= h_sync,
 		  hs_out			<= v_sync
 		
 	);

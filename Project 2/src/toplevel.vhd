@@ -12,9 +12,9 @@ entity toplevel is
     generic( iterations: positive := 16 );
 end entity toplevel;
 
-architecture steve of toplevel is
+architecture behavior of toplevel is
 
-    constant PATH: string := "/home/user/Desktop/toplevel/steve_one.bmp";
+    constant PATH: string := "/home/user/Desktop/toplevel/set.bmp";
 
     -- four bit color value
     type color_value is array (0 to 3) of std_logic;
@@ -95,4 +95,4 @@ architecture steve of toplevel is
 
 begin
     generate_set;
-end architecture steve;
+end architecture behavior;

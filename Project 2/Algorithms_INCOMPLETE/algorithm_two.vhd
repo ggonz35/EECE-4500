@@ -6,6 +6,13 @@ use work.vga_data.all;
 use work.ads_fixed.all;
 
 entity generate_set is
+	port(
+		input_cord: coordinate;
+	);
+	generic(
+		x_visible: natural;
+		y_visable: natural
+	);
 end generate_set;
 
 
@@ -20,6 +27,9 @@ architecture set_gen of generate_set is
 	begin
 
 	generate_set:process(c, color_index, color, p)
+	
+	x_visable <= input_cord.x;
+	y_visable <= input_cord.y;
 
     begin
 
@@ -36,5 +46,3 @@ architecture set_gen of generate_set is
         end loop;
     end process;
 end set_gen;
-
-

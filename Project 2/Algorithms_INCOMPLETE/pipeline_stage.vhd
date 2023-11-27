@@ -23,18 +23,21 @@ architecture behavior of pipeline_stage is
     signal z_overflow: boolean;
 begin
 
-    -- The stage_data output should be the value on the stage_data input if the stage_overflow
-    -- input is true, else it should be the current stage number.
+    -- Makes stage_data output equal to stage_data input unless we get an overflow, then set stage_data output to stage_number
     stage_output.stage_data <= stage_input.stage_data when stage_input.stage_overflow else stage_number;
 
-    -- 
-    stage_output.stage_overflow <= stage_input.stage_overflow or (z_overflow);
+    -- set the output overflow to true if a previous stage overflowed or if z overflowed this time
+    stage_output.stage_overflow <= stage_input.stage_overflow or z_overflow;
 
     -- assign C output as it is
     stage_output.c <= stage_input.c;
 
     -- compute products
+    
+    -- 
     z_re_im <= stage_input.z.re * stage_input.z.im;
+
+    -- 
     z_re_re <= stage_input.z.re * stage_input.z.re;
     z_im_im <= stage_input.z.im * stage_input.z.im;
 
@@ -43,14 +46,6 @@ begin
 
     z_overflow <= (z_re_re + z_im_im) > threshold;
 
-   --z_real_part_temp <= (stage_input.z.real_part ** 2) - (stage_input.z.imaginary_part ** 2) + stage_input.c.real_part;
-
-   --z_imaginary_part_temp <= (2.0 * stage_input.z.real_part * stage_input.z.imaginary_part) + stage_input.c.imaginary_part; 
-     -- Calculate overflow flags for z and c
-   --z_overflow <= (abs(z_real_part_temp) > threshold) or (abs(z_imaginary_part_temp) > threshold);
-
-   --c_overflow <= (abs(stage_input.c.real_part) > threshold) or (abs(stage_input.c.imaginary_part) > threshold);   -- Use temporary values to update z
-   
    stage_output.z.real_part <= z_real_part_temp;
 
    stage_output.z.imaginary_part <= z_imaginary_part_temp;

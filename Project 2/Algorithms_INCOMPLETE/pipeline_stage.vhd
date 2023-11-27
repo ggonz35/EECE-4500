@@ -10,8 +10,11 @@ entity pipeline_stage is
         stage_number: natural := 20
     );
     port(
-        rst: in std_logic;
-        clk: in std_logic
+        pls_rst: in std_logic;
+        pls_clk: in std_logic;
+		  
+		pls_in:  in std_logic;
+		pls_out: out std_logic
     );
 end pipeline_stage;
 

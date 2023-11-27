@@ -39,10 +39,11 @@ begin
 	pll :entity vga_pll 
 	
 		port map (
-		
+		--in
 		arset				<= a_set,
 		in_clk			<= clk_50,
 		
+		--out
 		vga_clk 			<= c0,
 		l_set 			<= locked
 		
@@ -52,10 +53,11 @@ begin
 	vga:entity vga_fsm
 	
 		  port map(
-		  
+		  --in
 		  vga_clock		<= vga_clk,
         reset			<= rst,
 
+		  --out
 		  point_out		<=	point,
 		  p_val_out		<= point_valid,
 
@@ -64,7 +66,40 @@ begin
 		
 	);
 	
+	c_gen: entity generate_set
+			port map(
+			--in
+				input_cord <= point_out,
+				
+			--out
+				c_g_out		<=c_out
+			);
 	
+	s_reg:entity shit_reg
+	
+		port map(
+		--in
+		clock				<=vga_clk,
+		shiftin			<= ,
+		
+		--out
+		s_r_out			<=shiftout,
+		no_ide			<=taps
+	);
+	
+	ppln:entity pipeline
+		
+		port map	(
+			--in
+		  clock			<=vga_clock,
+        reset			<=rst,
+        c				<= ,
+        z				<= ,
+		  
+			--out
+        ppln_out		<= ov_out
+		
+	);
 	 
 
 end architecture steve;

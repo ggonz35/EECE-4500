@@ -12,7 +12,6 @@ entity pipeline_stage is
     port(
         pls_rst: in std_logic;
         pls_clk: in std_logic;
-		  
 		pls_in:  in std_logic;
 		pls_out: out std_logic
     );
@@ -23,12 +22,15 @@ architecture behavior of pipeline_stage is
     signal stage_output: complex_record;
 begin
 
-    --perform computations and complete assignments
-   -- Calculate stage_data and stage_overflow based on the rules
+    -- The stage_data output should be the value on the stage_data input if the stage_overflow
+    -- input is true, else it should be the current stage number.
    stage_output.stage_data <= stage_input.stage_data when stage_input.stage_overflow else stage_number;
 
-   stage_output.stage_overflow <= stage_input.stage_overflow or (z_overflow or c_overflow); -- Assign c output as it is
-   stage_output.c <= stage_input.c;   -- Compute z^2 + c
+    -- Assign c output as it is
+   stage_output.stage_overflow <= stage_input.stage_overflow or (z_overflow or c_overflow);
+   
+   -- Compute z^2 + c
+   stage_output.c <= stage_input.c;
 
    z_real_part_temp <= (stage_input.z.real_part ** 2) - (stage_input.z.imaginary_part ** 2) + stage_input.c.real_part;
 
@@ -39,7 +41,7 @@ begin
    c_overflow <= (abs(stage_input.c.real_part) > threshold) or (abs(stage_input.c.imaginary_part) > threshold);   -- Use temporary values to update z
    
    stage_output.z.real_part <= z_real_part_temp;
-   
+
    stage_output.z.imaginary_part <= z_imaginary_part_temp;
 
 end behavior;

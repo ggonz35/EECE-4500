@@ -5,21 +5,20 @@ use work.ads_fixed.all;
 use work.pipeline_stage_package.all
 
 entity pipeline_stage is
+    -- Set default values
     generic(
         threshold: ads_sfixed := to_ads_sfixed(64);
         stage_number: natural := 20
     );
     port(
+        -- Define input and output of pipeline stage
         stage_input: in complex_record;
         stage_output: out complex_record
-		--pls_in:  in std_logic;
-		--pls_out: out std_logic
     );
 end pipeline_stage;
 
 architecture behavior of pipeline_stage is
-    --signal stage_input: complex_record;
-    --signal stage_output: complex_record;
+    -- Create signals for temporary usage
     signal z_re_sq, z_im_sq, z_re_im: ads_sfixed;
     signal z_overflow: boolean;
 begin

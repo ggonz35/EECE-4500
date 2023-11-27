@@ -33,21 +33,23 @@ begin
     stage_output.c <= stage_input.c;
 
     -- compute products
-    
-    -- 
+
+    -- z're * z'im
     z_re_im <= stage_input.z.re * stage_input.z.im;
 
-    -- 
+    -- z're^2
     z_re_re <= stage_input.z.re * stage_input.z.re;
+
+    -- z'im^2
     z_im_im <= stage_input.z.im * stage_input.z.im;
 
+    -- z_out're = z're^2 - z'im^2 + c're
     stage_output.z.re <= z_re_re - z_im_im + stage_input.c.re;
+
+    -- z_out'im = 2* (z're * z'im) + c'im
     stage_output.z.im <= z_re_im + z_re_im + stage_input.c.im;
 
+    -- calculate if value is larger than threshold
     z_overflow <= (z_re_re + z_im_im) > threshold;
-
-   stage_output.z.real_part <= z_real_part_temp;
-
-   stage_output.z.imaginary_part <= z_imaginary_part_temp;
 
 end behavior;

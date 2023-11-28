@@ -1,3 +1,9 @@
+library ieee;
+use ieee.std_logic_1164.all;
+
+use work.ads_complex_pkg.all;
+use work.ads_fixed.all;
+use pipeline_stage.all;
 
 entity pipeline is
     generic (
@@ -27,7 +33,9 @@ begin
     -- get the finalized output for the last stage
     ov_out <= pipeline_in(pipeline_length).stage_data;
 
+    -- Generates pipeline_length pipelines
     stages: for i in 0 to pipeline_length - 1 generate
+        -- Sets up the pipeline stage and the register to connect it
         s: pipeline_stage
             generic map (
                 threshold => threshold,
@@ -38,6 +46,7 @@ begin
                 stage_output => pipeline_out(i)
             );
 
+        -- Connects the pipelines together
         store: process(clock, reset) is
         begin
             if reset = '0' then

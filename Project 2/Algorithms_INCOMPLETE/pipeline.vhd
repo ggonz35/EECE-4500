@@ -22,10 +22,7 @@ architecture rtl of pipeline is
 begin
 
     -- populate input to first stage
-    pipeline_in(0).z <= z;
-    pipeline_in(0).c <= c;
-    pipeline_in(0).stage_data <= 0;
-    pipeline_in(0).stage_overflow <= false;
+    pipeline_in(0) <= (z => z, c => c, stage_data => 0, stage_overflow => false);
 
     -- get the finalized output for the last stage
     ov_out <= pipeline_in(pipeline_length).stage_data;

@@ -59,8 +59,8 @@ architecture set_gen of generate_set is
 		PIPE : pipeline port map (
 			clock => clock;
 			reset => reset;
-			c => c;
-			z => z;
+			c => c,
+			z => z,
 			ov_out => color_index
 		);
 	

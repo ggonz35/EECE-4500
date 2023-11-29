@@ -9,7 +9,7 @@ entity generate_set is
 	port(
 		gs_clk:	in	std_logic_vector(4 downto 0)
 		input_cord: in coordinate;
-		c_out:		out ads_complex;
+		c_out:		out ads_complex
 	);
 	generic(
 		x_visible: natural;
@@ -20,11 +20,11 @@ end generate_set;
 
 architecture set_gen of generate_set is
 	-- signal decleration
-	     signal c: ads_complex;
+	signal c: ads_complex;
         signal color_index: natural;
         signal color: std_logic_vector(3 downto 0);
-		  signal l: natural;
-		  signal p: natural;
+	variable l: natural;
+	variable p: natural;
 	
 	begin
 
@@ -36,8 +36,8 @@ architecture set_gen of generate_set is
     begin
 
 		if reset = '1' then
-				l <= 0;
-				p <= 0;
+				l := 0;
+				p := 0;
 		elsif rising_edge(gs_clk) then
 			if p < '639'
 				if x_visible(make_coordinate(p, l)) and y_visible(make_coordinate(p, l)) then
@@ -45,11 +45,11 @@ architecture set_gen of generate_set is
 						
 						-- Using the mod operator to index into the array but this may not be super efficient
 						color <= vga_color_map(color_index);
-						p <= p + 1
+						p := p + 1
 				end if;
 			else
 				if l < 479
-					l <= l + 1;
+					l := l + 1;
 				end if;
 			end if;
 		end if;

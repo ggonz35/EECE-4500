@@ -38,8 +38,8 @@ begin
         -- Sets up the pipeline stage and the register to connect it
         s: pipeline_stage
             generic map (
-                threshold => threshold,
                 stage_number => i
+                threshold => threshold,
             )
             port map (
                 stage_input => pipeline_in(i),

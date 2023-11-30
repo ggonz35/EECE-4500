@@ -1,8 +1,10 @@
 library ieee;
 use ieee.std_logic_1164.all;
-use work.ads_complex.all;
-use work.ads_fixed.all;
-use work.pipeline_stage_package.all
+
+library ads;
+use ads.ads_complex_pkg.all;
+use ads.ads_fixed_pkg.all;
+use work.pipeline_stage_package.all;
 
 entity pipeline_stage is
     -- Set default values
@@ -19,7 +21,7 @@ end pipeline_stage;
 
 architecture behavior of pipeline_stage is
     -- Create signals for temporary usage
-    signal z_re_sq, z_im_sq, z_re_im: ads_sfixed;
+    signal z_re_re, z_im_im, z_re_im: ads_sfixed;
     signal z_overflow: boolean;
 begin
 

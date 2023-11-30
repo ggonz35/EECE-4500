@@ -91,7 +91,7 @@ package vga_data is
 	constant vga_res_1920x1080:	vga_timing := vga_res_data(0);
 	constant vga_res_640x480:	vga_timing := vga_res_data(1);
 	constant vga_res_800x600:	vga_timing := vga_res_data(2);	-- TODO: initialize
-	constant vga_res_default:	vga_timing := vga_res_data(1);	-- TODO: initialize to your
+	constant vga_res_default:	vga_timing := vga_res_data(2);	-- TODO: initialize to your
 												-- target resolution
 
 	---- TODO: some functions need to be implemented
@@ -217,7 +217,6 @@ package body vga_data is
 			point:		in	coordinate;
 			vga_res:	in	vga_timing := vga_res_default
 		) return boolean is
-		variable point_visible: boolean;
 		
 	begin
 		-- DONE BY GROUp
@@ -241,14 +240,16 @@ package body vga_data is
 		variable ret: coordinate;
 	begin
 		ret.x := point.x + 1;
-		ret.y := point.y + 1;
-		-- Wrap around logic for vertical coordinates
-		if ret.y = vga_res.vertical.active then
-			ret.y := 0;
-		end if;
+		ret.y := point.y;
 		-- Wrap around logic for horizontal coordinates
-		if ret.x = timing_range(vga_res, vertical) then
+		if ret.x = timing_range(vga_res, horizontal) then
 			ret.x := 0;
+			ret.y := ret.y + 1;
+		end if;
+
+		-- Wrap around logic for vertical coordinates
+		if ret.y = timing_range(vga_res, vertical) then
+			ret.y := 0;
 		end if;
     return ret;
 end function next_coordinate;

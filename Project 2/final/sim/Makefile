@@ -3,7 +3,7 @@
 all: test-fixture
 
 clean:
-	-rm -f ads*.cfg *.o work*.cfg tb_mandelbrot
+	-rm -f ads*.cf *.o work*.cf tb_mandelbrot
 
 test-fixture: mandelbrot-tgt tb_mandelbrot.vhd
 	ghdl analyze tb_mandelbrot.vhd
@@ -14,9 +14,9 @@ ads-tgt:
 	ghdl analyze --work=ads ../ads_complex.vhd
 
 mandelbrot-tgt: ads-tgt
-	ghd analyze ../pipeline.vhd
-	ghd analyze ../pipeline_stage_package.vhd
-	ghd analyze ../pipeline_stage.vhd
+	ghdl analyze ../pipeline_stage_package.vhd
+	ghdl analyze ../pipeline_stage.vhd
+	ghdl analyze ../pipeline.vhd
 
 #../vga_data.vhd
 #../vga_fsm.vhd

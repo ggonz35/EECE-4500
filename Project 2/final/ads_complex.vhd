@@ -1,9 +1,9 @@
 ---- this file is part of the ADS library
-library work;
+library ads;
+use work.ads_fixed_pkg.all;
 
 package ads_complex_pkg is
 
-	use work.ads_fixed.all;
 
 	-- complex number in rectangular form
 	type ads_complex is
@@ -75,7 +75,7 @@ package body ads_complex_pkg is
 
 	-- implement all other functions here
 	function ads_cmplx(
-        re, im: in ads_fixed
+        re, im: in ads_sfixed
     ) return ads_complex is
     begin
         return (re, im);

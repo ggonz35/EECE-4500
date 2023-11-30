@@ -1,9 +1,11 @@
 library ieee;
 use ieee.std_logic_1164.all;
 
-use work.ads_complex_pkg.all;
-use work.ads_fixed.all;
-use pipeline_stage.all;
+library ads;
+use ads.ads_complex_pkg.all;
+use ads.ads_fixed_pkg.all;
+
+use work.pipeline_stage_package.all;
 
 entity pipeline is
     generic (
@@ -38,8 +40,8 @@ begin
         -- Sets up the pipeline stage and the register to connect it
         s: pipeline_stage
             generic map (
-                stage_number => i
-                threshold => threshold,
+                stage_number => i,
+                threshold => threshold
             )
             port map (
                 stage_input => pipeline_in(i),

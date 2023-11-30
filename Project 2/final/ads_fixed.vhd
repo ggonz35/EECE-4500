@@ -4,7 +4,7 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
-package ads_fixed is
+package ads_fixed_pkg is
 	-- replace here with number of bits needed for integer part
 	constant msb: integer := 10;
 	-- replace here with number of bits needed for fractional part
@@ -57,9 +57,9 @@ package ads_fixed is
 			l, r:	in ads_sfixed
 		) return boolean;
 
-end package ads_fixed;
+end package ads_fixed_pkg;
 
-package body ads_fixed is
+package body ads_fixed_pkg is
 	constant ads_epsilon: ads_sfixed := (msb downto -lsb + 1 => '0') & "1";
 
 	constant minimum_value: signed(ads_epsilon'length - 1 downto 0) := 
@@ -372,4 +372,4 @@ package body ads_fixed is
 		return lhs > rhs;
 	end function ">";
 
-end package body ads_fixed;
+end package body ads_fixed_pkg;

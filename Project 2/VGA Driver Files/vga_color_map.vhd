@@ -29,7 +29,22 @@ architecture vga_c_map of vga_color_map is
 			( red => "1100", green => "0000", blue => "0011" ),
 			( red => "1101", green => "0000", blue => "0010" ),
 			( red => "1110", green => "0000", blue => "0001" ),
-			( red => "1111", green => "0000", blue => "0000" )
+			( red => "1111", green => "0000", blue => "0000" ),
+			( red => "1111", green => "0000", blue => "0001" ),
+			( red => "1111", green => "0000", blue => "0010" ),
+			( red => "1111", green => "0000", blue => "0011" ),
+			( red => "1111", green => "0000", blue => "0100" ),
+			( red => "1111", green => "0000", blue => "0101" ),
+			( red => "1111", green => "0000", blue => "0110" ),
+			( red => "1111", green => "0000", blue => "0111" ),
+			( red => "1111", green => "0000", blue => "1000" ),
+			( red => "1111", green => "0000", blue => "1001" ),
+			( red => "1111", green => "0000", blue => "1010" ),
+			( red => "1111", green => "0000", blue => "1011" ),
+			( red => "1111", green => "0000", blue => "1100" ),
+			( red => "1111", green => "0000", blue => "1101" ),
+			( red => "1111", green => "0000", blue => "1110" ),
+			( red => "1111", green => "0000", blue => "1111" )
 		);
 
 	begin

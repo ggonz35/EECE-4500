@@ -127,7 +127,7 @@ begin
 			clock =>		vga_clock,
 			reset =>		reset,
 			c =>			ads_cmplx(to_ads_sfixed(-1), to_ads_sfixed(0)),	-- for mandelbrot, set this to seed
-			z =>			seed,															-- for mandelbrot, set this to complex_zero
+			z =>			seed,						-- for mandelbrot, set this to complex_zero
 			ov_out =>	ov_out
 		);
 

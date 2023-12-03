@@ -12,9 +12,9 @@ entity toplevel is
     generic( iterations: positive := 16 );
 end entity toplevel;
 
-architecture steve of toplevel is
+architecture behavior of toplevel is
 
-    constant PATH: string := "/home/user/Desktop/toplevel/steve_one.bmp";
+    constant PATH: string := "/home/user/Desktop/toplevel/output.bmp";
 
     function compute_point(c: in ads_complex) return natural is
         variable z: ads_complex := ads_cmplx(to_ads_sfixed(0), to_ads_sfixed(0));
@@ -86,4 +86,4 @@ architecture steve of toplevel is
 
 begin
     generate_set;
-end architecture steve;
+end architecture behavior;

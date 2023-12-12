@@ -10,6 +10,8 @@ entity consumer is
     port
     (
 
+        reset: in std_logic;
+
         head: in natural range 0 to 2**ADDR_WIDTH - 1;
         tail: out natural range 0 to 2**ADDR_WIDTH - 1
 

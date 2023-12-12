@@ -9,8 +9,8 @@ entity consumer is
 
     port
     (
-
         reset: in std_logic;
+        clock_50: in std_logic;
 
         head: in natural range 0 to 2**ADDR_WIDTH - 1;
         tail: out natural range 0 to 2**ADDR_WIDTH - 1
@@ -48,9 +48,9 @@ architecture behavior of consumer is
 begin
 
     tail <= tail_ptr;
-    tail_can_advance <= can_advance(head_ptr, tail);
+    tail_can_advance <= can_advance(tail_ptr, head);
 
-    transition: process(state, conversion_end, head_can_advance) is
+    transition: process(state, clock_50, tail_can_advance) is
     begin
         case state is
             when start =>
@@ -64,20 +64,20 @@ begin
         end case;
     end process transition;
 
-    save_state: process(adc_clock, reset) is
+    save_state: process(clock_50, reset) is
     begin
         if reset = '0' then
             state <= start;
-        elsif rising_edge(adc_clock) then
+        elsif rising_edge(clock_50) then
             state <= next_state;
         end if;
     end process save_state;
 
-    output_function: process(adc_clock, reset) is
+    output_function: process(clock_50, reset) is
     begin
         if reset = '0' then
             state <= start;
-        elsif rising_edge(adc_clock) then
+        elsif rising_edge(clock_50) then
             conversion_start <= '0';
             write_enable <= '0';
             case state is
